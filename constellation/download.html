@@ -109,7 +109,58 @@
 
   <div class="container px-4 py-5" id="featured-3">
     <h1 class="pb-0">Download Constellation</h1>
-    <div class='row justify-content-center text-center mt-3'>
+    <div class='row'>
+      <div class='col-md-6 col-12'>
+        <center>
+          <H3>Install Pre-Compiled Packages</H3>
+          <i>Easiest way to get started</i>
+          <br><br>
+          <i><b>Coming soon</b></i>
+        </center>
+
+      </div>
+      <div class='col-md-6 col-12'>
+        <center>
+          <H3>Install from Source</H3>
+          <i>Widest system compoatability</i>
+        </center>
+        <br>
+        <H5>Installation steps</H5>
+        <ol>
+          <li>Download your desired Constellation component from the links below and extract the ZIP file.</li>
+          <li>Ensure sure you have Python 3.8 or newer installed.</li>
+          <b>Windows</b>: Open Command Prompt and run <code>py --version</code>
+          <br>
+          <b>macOS/Linux</b>: Open a terminal and run <code>python3 --version</code>
+
+          <li>Install the necessary modules.</li>
+          <b>Windows</b>: Double-click <code>Windows_install.bat</code>.
+          <br>
+          <b>macOS</b>: Double-click <code>macOS_install.command</code>.
+          <br>
+          <b>Linux</b>: Open a terminal inside the downloaded folder and run <code>chmod a+x linux_install.sh; ./linux_install.sh</code>
+
+          <li>Start the helper.</li>
+          <b>Windows</b>: Double-click <code>Windows_start.bat</code>.
+          <br>
+          <b>macOS</b>: Double-click <code>macOS_start.command</code>.
+          <br>
+          <b>Linux</b>: Open a terminal inside the downloaded folder and run <code>python3 helper.py</code>
+
+          <li>If this is your first time running the helper for this component, it will open a webpage that enables you to configure the initial settings. Once you have saved the settings, close the webpage and the helper window before reopening.
+          </li>
+
+          <li>
+            Once the helper is running and configured, the final step is to open the webpage associated with the component. For example, if you have downlaoded the Media Player, open <code>media_player.html</code>.
+          </li>
+        </ol>
+        <H5>Downloads</H5>
+        <a href="https://github.com/Cosmic-Chatter/Constellation/releases/download/v0.1.1-beta/media_player_RC.zip" class='btn btn-primary'>Media Player</a>
+      </div>
+
+    </div>
+
+    <!-- <div class='row justify-content-center text-center mt-3'>
       <div class='col-12'>
         <H3>Operating System</H3>
       </div>
@@ -123,9 +174,9 @@
         <button id='os-linux' class='btn btn-secondary w-100 os-button' onclick="chooseOS('linux')">Linux</button>
         <p><i>Including Raspberry Pi</i></p>
       </div>
-    </div>
+    </div> -->
 
-    <div id="arch-row" class='row justify-content-center text-center mt-3'>
+    <!-- <div id="arch-row" class='row justify-content-center text-center mt-3'>
       <div class='col-12'>
         <H3>Architecture</H3>
       </div>
@@ -152,9 +203,9 @@
       <div id="arch-arm64" class='col-12 col-sm-4 col-md-3 col-lg-2 arch-col mt-2'>
         <button class='btn btn-secondary w-100 arch-button' onclick="chooseArch('arm64')">ARM 64-bit</button>
       </div>
-    </div>
+    </div> -->
 
-    <div id="comp-row" class='row justify-content-center text-center mt-3'>
+    <!-- <div id="comp-row" class='row justify-content-center text-center mt-3'>
       <div class='col-12'>
         <H3>Constellation Component</H3>
         <i>Click to download</i>
@@ -168,9 +219,6 @@
       <div id="comp-infostation" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
         <a class='btn btn-info w-100'>InfoStation</a>
       </div>
-      <!-- <div id="comp-iPlayer3" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
-        <a class='btn btn-info w-100'>iPlayer 3 Control</a>
-      </div> -->
       <div id="comp-media-browser" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
         <a class='btn btn-info w-100'>Media Browser</a>
       </div>
@@ -180,18 +228,13 @@
       <div id="comp-SOS-kiosk" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
         <a class='btn btn-info w-100'>SOS Kiosk</a>
       </div>
-      <!-- <div id="comp-SOS-plot-tools" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
-        <a class='btn btn-info w-100'>SOS Plot Tools</a>
-      </div> -->
       <div id="comp-SOS-screen" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
         <a class='btn btn-info w-100'>SOS Screen Player</a>
       </div>
       <div id="comp-word-cloud" class='col-12 col-sm-6 col-md-4 col-lg-3 comp-col mt-2'>
         <a class='btn btn-info w-100'>Word Cloud</a>
       </div>
-
-
-      </div>
+      </div> -->
     </div>
   </div>
 </main>
