@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Morgan Rehnberg">
+    <title>Download Constellation</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="prism.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="../features.css" rel="stylesheet">
+  </head>
+  <body>
+
+<main>
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column text-center">
+    <header class="mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">Cosmic Chatter</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link text-secondary" aria-current="page" href="../index.html">Home</a>
+          <a class="nav-link text-secondary" href="#">About</a>
+          <a class="nav-link text-primary active" href="constellation.html">Constellation</a>
+          <a class="nav-link text-secondary" href="#">Contact</a>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <div class="container px-4 py-5" id="featured-3">
+    <h1 class="pb-0">Developing with Constellation</h1>
+    While Constellation Apps enables many kinds of interactives, you can also develop your own apps that integrate with Control Server.
+
+    <H2>Building a browser-based app</H2>
+    <div class="row">
+      <div class="col-12 col-xl-8">
+        <p>
+          The apps in Constellation Apps are built using JavaScript. This approach ensures maximum flexibility, while also offloading many performance and security concerns to the rendering engine. It also makes developing your own app surprisingly easy!
+        </p>
+        <p>
+          Constellation Apps provides a JavaScript module, <code>constellation_app_common.js</code>, that enables easy connection with Constellation. In just a few lines of code, you can have an app up and running! Here is the complete code to create a blank Constellation app (the JavaScript file, at least):
+        </p>
+<pre><code class="language-javascript">import * as constCommon from 'constellation_app_common.js'
+
+function loadDefinition (definition) {
+  // A function to configure your app's content
+  // based on the provided configuration.
+  ... 
+}
+
+function parseUpdate (update) {
+  // A function to respond to commands from
+  // Control Server.
+  ...
+}
+
+constCommon.configureApp({
+  name: 'other',
+  loadDefinition: loadDefinition,
+  parseUpdate: parseUpdate
+})
+</code></pre>
+        <p>
+          Note that <code>constellation_app_common.js</code> is a JavaScript module, so your file must also be a module.
+        </p>
+        <H4>Definitions</H4>
+        <p>
+          Definitions are user-provided configuraitons for your app. Users can use the Other App setup page in Constellation Apps to pass parameters to your app. Based on those parameters, you can configure the app as needed. These parameters are given in the <code>parameters</code> field of the defintion:
+        </p>
+<pre><code class="language-javascript">{
+  ...
+  parameters: {
+    'parameter 1': 'value 1',
+    'parameter 2': 'value 2'
+  },
+  ...
+}</code></pre>
+        <p>
+          You can ignore the other fields in the definition, as they are for interal Constellation use.
+        </p>
+
+        <H4>Updates</H4>
+        <p>
+          If your user is using Control Server, your app will check in with the server every five seconds. This updates the Control Server web console and retrieves any updates from the server.
+        </p>
+
+        <h5>Interaction status</h5>
+        <p>Your app can communicate whether it is in active use by setting the value of <code>constCommon.config.currentInteraction</code>. Set the value to <code>true</code> when interaction begins and <code>false</code> when it ends. One common way of defining "ends" is when the attractor is shown again. Properly setting this variable helps your user understand how the app is being used and enables them to collect analytics.</p>
+
+        <h5>Responding to commands</h5>
+        <p>
+          Control Center may send a command in response to a user action, an event in the schedule, or another app. Built-in commands, such as refreshing, restarting, and shutting down, are handled automatically by Constellation.
+        </p>
+        <p>
+          Using the <code>parseUpdate()</code> function, your app can respond to custom commands.
+        </p>
+
+        <H4>Reading and writing local data</H4>
+        <p>
+          You can read and write local data by using <code>constCommon.makeHelperRequest()</code>.
+        </p>
+
+        <H5><code>/data/write</code></H5>
+        <p>
+          Write a JavaScript object to disk. Each request will write one line of JSON to the file. The user can download the file as a CSV spreadsheet from the Constellation Apps configuration page.
+        </p>
+        
+<pre><code class="language-javascript">{
+  data: {
+    key1: 'value1',
+    'key 2': ['value 2', 'value 3']
+  },
+  name: 'myDataFile'
+}</code></pre>
+        <h6><code>data</code></h6>
+        <p>
+          A JSON-serializable object.
+        </p>
+        <h6><code>name</code></h6>
+        <p>
+          A string filename without an extension. The extension <code>'.txt'</code> will be appended.
+        </p>
+      
+        <H5><code>/data/writeRawText</code></H5>
+        <p>
+          Write the given text to file for later retrieval. If you wish to write JSON, you must call <code>JSON.stringify()</code> yourself first.
+        </p>
+        <pre><code class="language-javascript">{
+          text: 'A string of text',
+          mode: 'a',
+          name: 'myDataFile'
+        }</code></pre>
+        
+        <h6><code>text</code></h6>
+        <p>
+          A string of text to be written to file.
+        </p>
+        <h6><code>mode</code></h6>
+        <p>
+          Pass <code>'a'</code> (default) to append to the file or <code>'w'</code> to overwrite the file.
+        </p>
+        <h6><code>name</code></h6>
+        <p>
+          A string filename without an extension. The extension <code>'.txt'</code> will be appended.
+        </p>
+
+        <H5><code>/data/getRawText</code></H5>
+        <p>Retrieve a previously-written data file.</p>
+
+<pre><code class="language-javascript">{
+  name: 'myDataFile'
+}</code></pre>
+        <h6><code>name</code></h6>
+        <p>
+          A string filename without an extension. The extension <code>'.txt'</code> will be appended.
+        </p>
+      </div>
+    </div>  
+    <H2>Building a compiled app</H2>
+    <div class="row">
+      <div class="col-12 col-xl-8">
+        When building an app using Python, Java, .NET, etc., you must communicate with Control Server manually. 
+        <H3>Ping</H3>
+        Constellation uses a client-server model. To connect your app to Control Server, you should send a JSON object to the server every five seconds. Constellation calls this a <code>ping</code>. The <code>ping</code> object should have the following format and be sent as a <code>POST</code> request to the endpoint <code>/system/ping</code>:
+
+            <pre><code class="language-javascript">{
+  currentInteraction: true,
+  group: 'My Group',
+  helperAddress: '192.168.1.27:8000',
+  id: 'My ID',
+  permissions: {
+    audio: true,
+    refresh: true,
+    restart: true,
+    shutdown: false,
+    sleep: false
+  }
+}</code></pre>
+
+        <H4><code>currentInteraction</code></H4>
+        Boolean value that should be <code>true</code> if the user is currenting interacting with the app or <code>false</code> if they are not (or this is not an interactive app).
+        <H4><code>group</code></H4>
+        String value with a user-provided value.
+        <H4><code>id</code></H4>
+        String value with a user-provided value. Every Constellation app must have a unique <code>id</code>.
+        <H4><code>permissions</code></H4>
+        A dictionary defining how Control Server may command the app.
+        <h5><code>audio</code></h5>
+        A boolean value giving whether Control Server can mute/unmute the app.
+        <h5><code>refresh</code></h5>
+        A boolean value giving whether Control Server can ask the app to refresh its state. The result should be equivilent to pressing refresh in a browser.
+        <h5><code>restart</code></h5>
+        A boolean value giving whether Control Server may ask the app to restart the underlying computer.
+        <h5><code>shutdown</code></h5>
+        A boolean value giving whether Control Server may ask the app to shut down the underlying computer.
+        <h5><code>sleep</code></h5>
+        A boolean value giving whether Control Server may ask the app to put the display to sleep.
+        <H3>Ping response</H3>
+    When Control Server receives a <code>ping</code>, it will respond with a JSON object. That object will have the following structure:
+    <pre><code class="language-javascript">{
+  app_name: 'other',
+  commands: [],
+  current_exhibit: 'An Exhibit',
+  definition: '',
+  description: 'Some user-provided text describing this interactive.',
+  error: '{}',
+  permissions: {
+    audio: true,
+    refresh: true,
+    restart: true,
+    shutdown: false,
+    sleep: false
+  }
+}</code></pre>
+        Most of these fields are for internal Constellation use. However, your app should respond to the follwoing fields:
+        <H4><code>commands</code></H4>
+        An array of string values representing commands from Control Server.
+        <h5><code>refresh_page</code></h5>
+        Your app should respond by rebuilding its content or reloading its state to an initial default. This should behave similarly to how pressing reload on a webpage does.
+        <h5><code>restart</code></h5>
+        Your app should initiate a reboot of the underlying PC.
+        <h5><code>shutdown</code> or <code>power_off</code></h5>
+        Your app should initiate a shut down of the underlying PC.
+        <h5><code>sleepDisplay</code></h5>
+        Your app should attempt to place the computer's display to sleep.
+        <h5><code>wakeDisplay or power_on</code></h5>
+        Your app should wake the computer's display.
+        <H4><code>permissions</code></H4>
+        This dictionary represents the user's desired permissions. If reasonable, you should update your internal permissions to align with these.
+        <h5><code>audio</code></h5>
+        If <code>audio</code> is <code>true</code>, your app should allow audio (unmute); if <code>false</code>, it should mute the audio.
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Set color mode
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.querySelector('html').setAttribute('data-bs-theme', 'dark')
+  } else {
+    document.querySelector('html').setAttribute('data-bs-theme', 'light')
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script src="prism.js"></script>
+
+</body>
+</html>
