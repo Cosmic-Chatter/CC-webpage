@@ -64,25 +64,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
-                </li>
+                <!-- Browser-based apps -->
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                    Browser-based apps
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#browserBasedApp">Overview</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="#browserBasedDefinitions">Definitions</a></li>
+                    <li><a class="dropdown-item" href="#browserBasedUpdates">Updates</a></li>
+                    <li><a class="dropdown-item" href="#browserBasedLocalData">Local data</a></li>
                   </ul>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                <!-- Non-broswer apps -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Non-browser apps
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#compiledApps">Overview</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#compiledAppsPing">Ping</a></li>
+                    <li><a class="dropdown-item" href="#compiledAppsPingResponse">Ping response</a></li>
+                  </ul>
                 </li>
               </ul>
             </div>
@@ -90,7 +95,7 @@
         </nav>
       </div>
       <div class="col-10">
-        <H2>Building a browser-based app</H2>
+        <H2 id="browserBasedApp">Building a browser-based app</H2>
     <div class="row">
       <div class="col-12 col-xl-8">
         <p>
@@ -122,7 +127,7 @@ constCommon.configureApp({
         <p>
           Note that <code>constellation_app_common.js</code> is a JavaScript module, so your file must also be a module.
         </p>
-        <H4>Definitions</H4>
+        <H4 id="browserBasedDefinitions">Definitions</H4>
         <p>
           Definitions are user-provided configuraitons for your app. Users can use the Other App setup page in Constellation Apps to pass parameters to your app. Based on those parameters, you can configure the app as needed. These parameters are given in the <code>parameters</code> field of the defintion:
         </p>
@@ -138,7 +143,7 @@ constCommon.configureApp({
           You can ignore the other fields in the definition, as they are for interal Constellation use.
         </p>
 
-        <H4>Updates</H4>
+        <H4 id="browserBasedUpdates">Updates</H4>
         <p>
           If your user is using Control Server, your app will check in with the server every five seconds. This updates the Control Server web console and retrieves any updates from the server.
         </p>
@@ -154,7 +159,7 @@ constCommon.configureApp({
           Using the <code>parseUpdate()</code> function, your app can respond to custom commands.
         </p>
 
-        <H4>Reading and writing local data</H4>
+        <H4 id="browserBasedLocalData">Reading and writing local data</H4>
         <p>
           You can read and write local data by using <code>constCommon.makeHelperRequest()</code>. For example, here is the code used to save votes from Voting Kiosk:
         </p>
@@ -234,14 +239,14 @@ constCommon.configureApp({
         </p>
       </div>
     </div>  
-    <H2>Building a compiled app</H2>
+    <H2 id="compiledApps">Building a non-broswer app</H2>
     <div class="row">
       <div class="col-12 col-xl-8">
         <p>
           When building an app using Python, Java, .NET, etc., you must communicate with Control Server manually. 
         </p>
         
-        <H3>Ping</H3>
+        <H3 id="compiledAppsPing">Ping</H3>
         <p>
           Constellation uses a client-server model. To connect your app to Control Server, you should send a JSON object to the server every five seconds. Constellation calls this a <code>ping</code>. The <code>ping</code> object should have the following format and be sent as a <code>POST</code> request to the endpoint <code>/system/ping</code>:
         </p>
@@ -261,11 +266,11 @@ constCommon.configureApp({
 }</code></pre></p>
 
         <H6><code>currentInteraction</code> <span class="badge text-bg-secondary">Boolean</span></H6>
-        <p>Boolean value that should be <code>true</code> if the user is currenting interacting with the app or <code>false</code> if they are not (or this is not an interactive app).</p>
+        <p>Boolean value that should be <code>true</code> if the user is currently interacting with the app or <code>false</code> if they are not (or this is not an interactive app).</p>
         
         <H6><code>group</code> <span class="badge text-bg-secondary">String</span></H6>
         <p>
-          String value with a user-provided value.String value with a user-provided value.
+          String value with a user-provided value.
         </p>
         
         <H6><code>id</code> <span class="badge text-bg-secondary">String</span></H6>
@@ -293,7 +298,7 @@ constCommon.configureApp({
           A boolean value giving whether Control Server may ask the app to restart the underlying computer.
         </p>
 
-        <h6><code>shutdown</code> <span class="b  ndary">Boolean</span></h6>
+        <h6><code>shutdown</code> <span class="badge text-bg-secondary">Boolean</span></h6>
         <p>
           A boolean value giving whether Control Server may ask the app to shut down the underlying computer.
         </p>
@@ -305,7 +310,7 @@ constCommon.configureApp({
         </div>
         
 
-        <H3>Ping response</H3>
+        <H3 id="compiledAppsPingResponse">Ping response</H3>
         <p>
           When Control Server receives a <code>ping</code>, it will respond with a JSON object. That object will have the following structure:
         </p>
